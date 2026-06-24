@@ -9,9 +9,8 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
-mongoose.connect(process.env.MONGO_URL);
-});
 
+mongoose.connect(process.env.MONGO_URL);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Product API");
@@ -25,7 +24,6 @@ app.get("/products", async (req, res) => {
     console.log("Error while fetching all products: " + err);
   }
 });
-
 
 app.get("/weatherData", async (req, res) => {
   try {
@@ -44,13 +42,6 @@ app.get("/:id", async (req, resp) => {
   console.log(oneProduct);
   resp.send(oneProduct);
 });
-
-
-
-
-
-
-
 
 app.post("/insert", async (req, res) => {
   console.log(req.body);
@@ -73,7 +64,6 @@ app.post("/insert", async (req, res) => {
     rating: { rate: prate, count: pcount },
   });
   try {
-    // await formData.save();
     await Product.create(formData);
     const messageResponse = { message: `Product ${p_id} added correctly` };
     res.send(JSON.stringify(messageResponse));
@@ -92,7 +82,7 @@ app.delete("/delete", async (req, res) => {
     };
     res.send(JSON.stringify(messageResponse));
   } catch (err) {
-    console.log("Error while deleting :" + p_id + " " + err);
+    console.log("Error while deleting :" + err);
   }
 });
 
@@ -113,5 +103,4 @@ app.put("/update", async (req, res) => {
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
-});
 });
